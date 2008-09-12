@@ -1,7 +1,5 @@
 package WWW::Content::Inventory;
-
-use warnings;
-use strict;
+use Moose;
 
 =head1 NAME
 
@@ -18,7 +16,12 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+Build a tree-based sitemap of a given ULR.
+
+Inspired by : 
+"Doing a Content Inventory" by I<Jeffrey Veen> 
+
+L<http://adaptivepath.com/ideas/essays/archives/000040.php>
 
 Perhaps a little code snippet.
 
