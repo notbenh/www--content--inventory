@@ -1,5 +1,6 @@
 package WWW::Content::Inventory;
 use Moose;
+use WWW::Content::Inventory::Page;
 
 =head1 NAME
 
@@ -27,8 +28,16 @@ Perhaps a little code snippet.
 
     use WWW::Content::Inventory;
 
-    my $foo = WWW::Content::Inventory->new();
+    my $ci = WWW::Content::Inventory->new();
     ...
+
+=cut
+
+has Pages => ( 
+   is => 'rw', 
+   isa => 'HashRef', 
+   default => sub { {} } 
+);
 
 =head1 EXPORT
 
@@ -37,11 +46,29 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 FUNCTIONS
 
-=head2 function1
+=head2 snarf
+
+  snarf('http://my.url');
 
 =cut
 
-sub function1 {
+sub snarf {
+   my ($self, $url) = @_;
+
+   #what can we find out about $url?
+   my $p = WWW::Content::Inventory::Page->new( url => $url )->snarf;
+   
+   #store everything that we found.
+   $self->Pages->{$url} = $p;
+
+   #look at every local link for $url to spider out.
+   for my $link ( @{ $p->local_links } ) {
+      if ( ! defined $self->Pages->{$link->{url}} ) {
+         $self->snarf( $link->{url} );
+      }
+   }
+
+   return $self;
 }
 
 =head2 function2
@@ -96,6 +123,7 @@ L<http://search.cpan.org/dist/WWW-Content-Inventory>
 
 =head1 ACKNOWLEDGEMENTS
 
+Stacey Anderson for presenting me with the problem to solve.
 
 =head1 COPYRIGHT & LICENSE
 
