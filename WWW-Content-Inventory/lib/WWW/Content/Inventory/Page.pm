@@ -3,33 +3,38 @@ use WWW::Mechanize;
 use Moose;
 use URI;
 
-has url => ( is => 'rw', isa => 'Str', required => 1 );
-has host => ( is => 'rw', isa => 'Str', lazy => 1, 
+#---------------------------------------------------------------------------
+#  what defines a page?
+#---------------------------------------------------------------------------
+has url => ( 
+   is => 'rw', 
+   isa => 'Str', 
+   required => 1 
+);
+
+has host => ( 
+   is => 'rw', 
+   isa => 'Str', 
+   lazy => 1, 
    default => sub { URI->new( shift->url)->host; }
 );
-has title => ( is => 'rw', isa => 'Str', default => sub{'undefind page name'} );
-has local_links => ( is => 'rw', isa => 'ArrayRef', default => sub{ [] } );
-has remote_links => ( is => 'rw', isa => 'ArrayRef', default => sub{ [] } );
-has content => ( is => 'rw', isa => 'Str');
-has images => ( is => 'rw', isa => 'Any', default => sub {[]} );
 
-=pod
-http://adaptivepath.com/ideas/essays/archives/000040.php
+has title => ( 
+   is => 'rw', 
+   isa => 'Str', 
+   default => sub{'undefind page name'} 
+);
 
-!!! NOTE:
-- it would be nice to build out a semantic version of the page:
--- body:
---- H1: title
----- content
----- H2 : title
------ content
-....
+has content => ( 
+   is => 'rw', 
+   isa => 'Str',
+);
 
-This would allow for the 'page' to be build towards the idea of 'perfection'
-- then if anything is not 'perfect' then you know what you need to work on
-
-Also try and carry the concept that this just builds the basic framework for some one to then go back thru and 'edit' to match what is really needed
-=cut
+has [qw{local_links remote_links images}] => (
+   is => 'rw',
+   isa => 'ArrayRef',
+   default => sub{[]},
+);
 
 sub snarf {
    my ($self) = @_;
