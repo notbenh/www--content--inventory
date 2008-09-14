@@ -75,3 +75,4 @@ sub _is_local {
    return ( $self->host eq $link->URI->abs->host);
 }
 
+1;
