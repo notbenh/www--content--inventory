@@ -29,6 +29,7 @@ Perhaps a little code snippet.
     use WWW::Content::Inventory;
 
     my $ci = WWW::Content::Inventory->new();
+    $ci->snarf($my_url);
     ...
 
 =cut
@@ -36,7 +37,7 @@ Perhaps a little code snippet.
 has Pages => ( 
    is => 'rw', 
    isa => 'HashRef', 
-   default => sub { {} } 
+   default => sub { {} },
 );
 
 =head1 EXPORT

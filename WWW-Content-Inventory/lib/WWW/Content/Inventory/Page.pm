@@ -3,6 +3,10 @@ use WWW::Mechanize;
 use Moose;
 use URI;
 
+=head1 NAME
+
+WWW::Content::Inventory::Page - What does a page look like?
+=cut
 #---------------------------------------------------------------------------
 #  what defines a page?
 #---------------------------------------------------------------------------
@@ -35,6 +39,20 @@ has [qw{local_links remote_links images}] => (
    isa => 'ArrayRef',
    default => sub{[]},
 );
+
+=head1 FUNCTIONS
+
+=head2 snarf
+
+Go find out everything that we can about a given page at the given url.
+
+
+   use WWW::Content::Inventory::Page;
+   my $p = WWW::Content::Inventory::Page->new(url => $my_url)->snarf;
+   my $title = $p->title;
+   
+
+=cut
 
 sub snarf {
    my ($self) = @_;
