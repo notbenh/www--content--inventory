@@ -56,6 +56,8 @@ if you don't export anything, such as for a purely object-oriented module.
 sub snarf {
    my ($self, $url) = @_;
 
+printf(qq{[PAGE] %s \n},$url);
+
    #what can we find out about $url?
    my $p = WWW::Content::Inventory::Page->new( url => $url )->snarf;
    
@@ -78,6 +80,14 @@ sub snarf {
 
 sub function2 {
 }
+
+
+=head1 TODO
+
+- it would be nice to have a 'report' 
+- Idealy I would rather push to some DB backend (SQLite?)
+- please add an exclude/ignore regex option
+
 
 =head1 AUTHOR
 
